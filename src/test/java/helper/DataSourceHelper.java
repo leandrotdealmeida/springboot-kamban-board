@@ -1,16 +1,27 @@
 package helper;
 
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 
-public class DataSourceHelper extends BasicDataSource {
+import java.sql.SQLException;
 
-    public DataSourceHelper() {
+public abstract class DataSourceHelper {
 
-        String url = "jdbc:h2:mem:DATABASE_TEST;" +
+    protected BasicDataSource dataSource = new BasicDataSource();
+
+    @BeforeEach
+    void init() {
+        String url = "jdbc:h2:mem:UNIT_TEST;" +
                 "MODE=PostgreSQL;" +
-                "INIT=RUNSCRIPT FROM 'src/main/resources/db/migration/V001__Initial_setup.sql'\\;" +
-                "RUNSCRIPT FROM 'classpath:fixture/dataset.sql'\\;";
+                "INIT=RUNSCRIPT FROM 'classpath:schema.sql'\\;";
 
-        this.setUrl(url);
+        dataSource.setUrl(url);
+        dataSource.setMaxTotal(1);
+    }
+
+    @AfterEach
+    void terminate() throws SQLException {
+        dataSource.close();
     }
 }
