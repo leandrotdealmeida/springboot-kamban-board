@@ -6,7 +6,7 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CreateListCommandTest {
+public class CreateBucketCommandTest {
 
     @Test
     void givenValidDataMustRetrieveSameData() {
@@ -17,7 +17,7 @@ public class CreateListCommandTest {
         String name = "TODO";
 
         // 2 - when : exercise (execution)
-         CreateListCommand command = new CreateListCommand(id, position, name);
+         CreateBucketCommand command = new CreateBucketCommand(id, position, name);
 
          // 3 - then : verify
         assertThat(command.getId()).isEqualTo(id);
