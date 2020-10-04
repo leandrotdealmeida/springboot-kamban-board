@@ -1,0 +1,10 @@
+version: "3.7"
+services:
+  postgres_cadastro:
+    container_name: postgres_kanbanboard
+    image: "postgres"
+    environment:
+      POSTGRES_USER: kanbanboard
+      POSTGRES_PASSWORD: kanbanboard
+    ports:
+         - 5432:5432  

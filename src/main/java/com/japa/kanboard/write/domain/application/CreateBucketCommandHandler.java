@@ -3,7 +3,10 @@ package com.japa.kanboard.write.domain.application;
 import com.japa.kanboard.write.domain.core.Bucket;
 import com.japa.kanboard.write.domain.core.BucketRepository;
 import com.japa.kanboard.write.domain.core.ListAgregate;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CreateBucketCommandHandler {
 
     private final BucketRepository repository;

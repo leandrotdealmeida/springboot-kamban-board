@@ -3,6 +3,7 @@ package com.japa.kanboard.write.domain.core;
 import org.apache.tomcat.jni.Local;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.UUID;
 
 public class Bucket {
@@ -10,8 +11,6 @@ public class Bucket {
     private UUID uuid;
     private int position;
     private String name;
-    private LocalDateTime createAt;
-    private LocalDateTime updateAt;
 
     public Bucket(){ }
 
@@ -51,21 +50,18 @@ public class Bucket {
         return this;
     }
 
-    public LocalDateTime getCreateAt() {
-        return createAt;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Bucket bucket = (Bucket) o;
+        return position == bucket.position &&
+                uuid.equals(bucket.uuid) &&
+                name.equals(bucket.name);
     }
 
-    public Bucket setCreateAt(LocalDateTime createAt) {
-        this.createAt = createAt;
-        return this;
-    }
-
-    public LocalDateTime getUpdateAt() {
-        return updateAt;
-    }
-
-    public Bucket setUpdateAt(LocalDateTime updateAt) {
-        this.updateAt = updateAt;
-        return this;
+    @Override
+    public int hashCode() {
+        return Objects.hash(uuid, position, name);
     }
 }
