@@ -26,7 +26,7 @@ class BucketRepositoryImplTest extends DataSourceHelper {
     }
 
     @ParameterizedTest
-    @MethodSource("dataProvider")
+    @MethodSource("validDataProvider")
     void given_ValidBucket_Must_PersistOnDatabase(UUID id,
                                                   int position,
                                                   String name) {
@@ -47,30 +47,43 @@ class BucketRepositoryImplTest extends DataSourceHelper {
 
     }
 
-    @Test
-    void given_AlreadyExistenBucket_Must_ThrowException () {
+    @ParameterizedTest
+    @MethodSource("invalidDataProvider")
+    void given_AlreadyExistenBucket_Must_ThrowException (UUID id,
+                                                         int position,
+                                                         String name) {
 
         // given
 
         Bucket expected = new Bucket()
-                .setUuid(UUID.fromString("cb5b7ae2-6346-45f6-a1ae-0969b7abc129"))
-                .setPosition(1)
-                .setName("EXISTENT");
+                .setUuid(id)
+                .setPosition(position)
+                .setName(name);
 
 
         // then
         assertThrows(RuntimeException.class, () -> bucketRepository.create(expected));
 
 
-
     }
 
-    private static Stream<Arguments> dataProvider() {
+    private static Stream<Arguments> validDataProvider() {
         return Stream.of(
                 Arguments.arguments(UUID.randomUUID(), 1, "TODO"),
                 Arguments.arguments(UUID.randomUUID(), 2, "DOING"),
                 Arguments.arguments(UUID.randomUUID(), 3, "DONE")
         );
     }
+
+    private static Stream<Arguments> invalidDataProvider() {
+        return Stream.of(
+                Arguments.arguments(UUID.fromString("cb5b7ae2-6346-45f6-a1ae-0969b7abc129"), 1 , "TODO"),
+                Arguments.arguments(UUID.randomUUID(), 100, "DOING"),
+                Arguments.arguments(UUID.randomUUID(), 2, "EXISTENT")
+        );
+    }
+
+
+
 
 }
